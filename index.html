@@ -222,7 +222,18 @@ table.info th { background: var(--accent-soft); width: 20%; white-space: nowrap;
   .layout { display: block; padding: 0; max-width: none; }
   #preview { display: block !important; position: static; max-height: none; overflow: visible; }
   #report { box-shadow: none; border: 0; padding: 0; min-height: 0; }
-  .rep-room { break-inside: avoid; }
+  /* 1ページに場所を2つずつ入れる */
+  .rep-room { break-inside: avoid; margin-bottom: 4mm; }
+  .rep-room:nth-child(2n) { break-after: page; }
+  .rep-room:last-child { break-after: auto; }
+  .rep-room h3 { margin: 0 0 2mm; font-size: 12px; }
+  .rep-room .tags { margin: 0 0 2mm; }
+  .rep-room .tags span { font-size: 10px; padding: 1px 7px; }
+  .rep-room .note { font-size: 11px; line-height: 1.5; margin: 2mm 0; }
+  .rep-room .rep-door { font-size: 11px; margin: 0 0 1mm; }
+  .rep-photos { grid-template-columns: 1fr 1fr; gap: 3mm; margin-top: 2mm; }
+  .rep-photos img { width: 100%; height: auto; max-height: 60mm; object-fit: contain; }
+  .rep-photos figcaption { font-size: 10px; margin-top: 1mm; }
   table.info th { background: #eee; }
 }
 </style>
@@ -499,7 +510,7 @@ function renderPreview() {
       <tr><th>住宅形態</th><td>${esc(i.houseType)}</td><th>担当者</th><td>${esc(i.staff)}</td></tr>
       <tr><th>調査目的</th><td colspan="3">${nl(i.purpose)}</td></tr>
     </table>
-    ${roomsHTML}
+    <div class="rep-rooms">${roomsHTML}</div>
     ${wrapHTML}
     ${state.summary ? `<h3>総合所見</h3><div class="note">${nl(state.summary)}</div>` : ''}
     <p class="sign">作成日：${esc(i.date)}　担当：${esc(i.staff)}</p>`;
